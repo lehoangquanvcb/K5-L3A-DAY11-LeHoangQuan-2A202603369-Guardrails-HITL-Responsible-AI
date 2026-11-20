@@ -62,6 +62,8 @@ class OpenAIRunner:
             return block_msg
 
         client = self._client()
+        if self.provider == "openrouter":
+            client = client.with_options(max_retries=4)
         completion = client.chat.completions.create(
             model=self.model,
             messages=[
